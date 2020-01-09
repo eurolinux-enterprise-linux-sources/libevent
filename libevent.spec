@@ -1,6 +1,6 @@
 Name:           libevent
 Version:        1.4.13
-Release:        1%{?dist}
+Release:        4%{?dist}
 Summary:        Abstract asynchronous event notification library
 
 Group:          System Environment/Libraries
@@ -25,12 +25,34 @@ without having to change the event loop.
 Summary: Header files, libraries and development documentation for %{name}
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
+Requires: %{name}-headers = %{version}-%{release}
+Requires: %{name}-doc = %{version}-%{release}
 
 %description devel
-This package contains the header files, static libraries and development
-documentation for %{name}. If you like to develop programs using %{name},
-you will need to install %{name}-devel.
+This package contains the static libraries documentation for %{name}. 
+If you like to develop programs using %{name}, you will need 
+to install %{name}-devel.
 
+%package doc
+Summary: Development documentation for %{name}
+Group: Development/Libraries
+Requires: %{name}-devel = %{version}-%{release}
+BuildArch: noarch
+
+%description doc
+This package contains the development documentation for %{name}. 
+If you like to develop programs using %{name}-devel, you will 
+need to install %{name}-doc.
+
+%package headers
+Summary: Header file for development  for %{name}
+Group: Development/Libraries
+Requires: %{name}-devel = %{version}-%{release}
+BuildArch: noarch
+
+%description headers
+This package contains the header files for %{name}. If you like to 
+develop programs using %{name}, you will need to install %{name}-devel.
 
 %prep
 %setup -q -n libevent-%{version}-stable
@@ -86,12 +108,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-,root,root,0755)
-%{_includedir}/event.h
-%{_includedir}/evdns.h
-%{_includedir}/evhttp.h
-%{_includedir}/event-config.h
-%{_includedir}/evrpc.h
-%{_includedir}/evutil.h
 %{_libdir}/libevent.so
 %{_libdir}/libevent.a
 %{_libdir}/libevent_core.so
@@ -103,12 +119,33 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man3/*
 
+%files doc
+%defattr(-,root,root,0644)
 %{_docdir}/%{name}-devel-%{version}/html/*
 %{_docdir}/%{name}-devel-%{version}/latex/*
 %{_docdir}/%{name}-devel-%{version}/man/man3/*
 %{_docdir}/%{name}-devel-%{version}/sample/*
 
+%files headers
+%{_includedir}/event.h
+%{_includedir}/evdns.h
+%{_includedir}/evhttp.h
+%{_includedir}/evrpc.h
+%{_includedir}/event-config.h
+%{_includedir}/evutil.h
+%defattr(-,root,root,0644)
+
 %changelog
+* Mon Apr 23 2012 Steve Dickson <steved@redhat.com> 1.4.13-4
+- Moved header files into there own rpm (bz 658051)
+- Added event-config.h to the new headers rpm.
+
+* Wed Apr  4 2012 Steve Dickson <steved@redhat.com> 1.4.13-3
+- Removed the event-config.h file (bz 658051)
+
+* Tue Mar  6 2012 Steve Dickson <steved@redhat.com> 1.4.13-2
+- Moved documentation into its own rpm (bz 658051)
+
 * Tue Dec 15 2009 Steve Dickson <steved@redhat.com> 1.4.13-1
 - Updated to latest stable upstream version: 1.4.13
 
