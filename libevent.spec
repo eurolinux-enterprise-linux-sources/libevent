@@ -1,6 +1,6 @@
 Name:           libevent
 Version:        2.0.21
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Abstract asynchronous event notification library
 
 Group:          System Environment/Libraries
@@ -114,6 +114,12 @@ make check
 %{_docdir}/%{name}-devel-%{version}/sample/*
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 2.0.21-4
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 2.0.21-3
+- Mass rebuild 2013-12-27
+
 * Wed Aug 21 2013 Steve Dickson <steved@redhat.com> 2.0.21-2
 - Removed rpmlint warnings
 
